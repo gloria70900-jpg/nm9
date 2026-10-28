@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-  <title>Harold Halibut — Universal Dome Video Theater</title>
+  <title>Harold Halibut — Immersive 360/180 Dome Theater</title>
   <style>
     html, body { margin:0; padding:0; background:#000; color:#eee; font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; height:100%; overflow:hidden; touch-action:none; }
     #ui { position: fixed; top: 12px; left: 12px; z-index: 100; background: rgba(10, 10, 14, 0.92); backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,0.18); border-radius: 12px; padding: 12px 14px; max-width: 450px; max-height: 92vh; overflow-y: auto; line-height: 1.25; }
@@ -16,13 +16,11 @@
     #ui button { cursor:pointer; }
     #ui button:hover { background:#2a2a35; }
 
-    /* 모든 포맷 지원 비디오 업로드 패널 */
     .dome-card { background: rgba(0, 136, 255, 0.15); border: 1px solid #0088ff; border-radius: 8px; padding: 10px; margin-bottom: 8px; }
     .dome-card h3 { margin: 0 0 6px; font-size: 12px; color: #66b3ff; }
     #domeFileInput { width: 100%; font-size: 12px; color: #fff; background: #002244; padding: 8px; border: 1px solid #0088ff; border-radius: 6px; box-sizing: border-box; cursor: pointer; }
     #videoStatus { font-size: 11px; color: #88ccff; margin-top: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: bold; }
 
-    /* A/B 듀얼 녹화 제어 패널 */
     .rec-card { background: rgba(255, 59, 48, 0.12); border: 1px solid #ff3b30; border-radius: 8px; padding: 8px; margin-bottom: 8px; display: flex; flex-direction: column; gap: 6px; }
     .rec-btn-row { display: flex; gap: 6px; }
     .rec-btn { flex: 1; padding: 10px 6px; font-weight: 700; font-size: 11px; color: #fff; border-radius: 6px; cursor: pointer; }
@@ -34,11 +32,9 @@
     @keyframes recBlink { 0% { opacity: 1; } 100% { opacity: 0.45; } }
     #recStatus { font-size: 11px; color: #ff9999; text-align: center; margin-top: 2px; }
 
-    /* 모바일 수경 VR 버튼 */
     .mobile-vr-card { background: rgba(0, 200, 100, 0.15); border: 1px solid #00c864; border-radius: 8px; padding: 8px; margin-bottom: 8px; }
     #mobileVrBtn { width: 100%; padding: 8px; font-weight: 700; font-size: 11px; background: #008844; color: #fff; border: 1px solid #00ff88; border-radius: 6px; cursor: pointer; }
 
-    /* 양안 배율 비대칭 선택 패널 */
     .aniseikonia-card { background: rgba(150, 0, 255, 0.12); border: 1px solid #aa44ff; border-radius: 8px; padding: 8px; margin: 8px 0; }
     
     #vrDivider { display: none; position: fixed; top: 0; left: 50%; width: 2px; height: 100%; background: rgba(255,255,255,0.25); z-index: 5; pointer-events: none; }
@@ -51,11 +47,10 @@
 <button id="exitVrBtn">✕ VR 모드 종료</button>
 
 <div id="ui">
-  <h1>Harold Halibut — Universal 돔 극장</h1>
+  <h1>Harold Halibut — Immersive 돔 극장</h1>
 
-  <!-- 1. 모든 비디오 포맷 지원 (MP4, WebM, MKV, AVI, MOV 등) -->
   <div class="dome-card">
-    <h3>🎬 동영상 선택 (MP4 / WebM / MKV / AVI / MOV 무제한)</h3>
+    <h3>🎬 동영상 선택 (MP4 / WebM / MKV / AVI / MOV)</h3>
     <input type="file" id="domeFileInput" accept="video/*,.mp4,.webm,.mkv,.avi,.mov" />
     <div id="videoStatus">재생할 비디오 파일을 선택해 주세요.</div>
     <div class="row" style="margin-top:8px;">
@@ -68,7 +63,6 @@
     </div>
   </div>
 
-  <!-- 2. 단일(A) / 분할(B) 녹화 선택 모듈 -->
   <div class="rec-card">
     <div class="rec-btn-row">
       <button id="recMonoBtn" class="rec-btn">🔴 단일 녹화 (A 버튼 / Key A)</button>
@@ -81,7 +75,6 @@
     <button id="mobileVrBtn">🥽 스마트폰 수경 VR 화면 모드 켜기</button>
   </div>
 
-  <!-- 3. 양안 배율 비대칭(Aniseikonia) 교정 모드 -->
   <div class="aniseikonia-card">
     <div class="row" style="margin-top:0;">
       <label style="color:#cc88ff; font-weight:700;">비대칭 시야 검사/교정</label>
@@ -99,9 +92,9 @@
   </div>
 
   <h2>파노라마 돔 환경 파라미터</h2>
-  <div class="row"><label>돔 곡면 반경 (m)</label><input id="domeRadius" type="range" min="10" max="60" step="1" value="30" /></div>
-  <div class="row"><label>돔 수평 시야각 (도)</label><input id="domeFovX" type="range" min="90" max="240" step="5" value="180" /></div>
-  <div class="row"><label>돔 중심 높이 (m)</label><input id="domeHeight" type="range" min="-5" max="10" step="0.5" value="1.6" /></div>
+  <div class="row"><label>돔 곡면 반경 (m)</label><input id="domeRadius" type="range" min="10" max="50" step="1" value="25" /></div>
+  <div class="row"><label>돔 수평 시야각 (도)</label><input id="domeFovX" type="range" min="120" max="240" step="5" value="190" /></div>
+  <div class="row"><label>돔 높이 오프셋 (m)</label><input id="domeHeight" type="range" min="-3" max="5" step="0.1" value="1.6" /></div>
 </div>
 
 <script type="module">
@@ -125,7 +118,6 @@
   const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 500);
   camera.position.set(0, 1.6, 0.0);
 
-  // 모바일 수경 카메라
   const camLeft = new THREE.PerspectiveCamera(75, (window.innerWidth * 0.5) / window.innerHeight, 0.1, 500);
   const camRight = new THREE.PerspectiveCamera(75, (window.innerWidth * 0.5) / window.innerHeight, 0.1, 500);
   const IPD = 0.064;
@@ -164,19 +156,18 @@
   domeVideoGain.gain.value = 0.9;
   domeVideoGain.connect(masterRecordGain);
 
-  // ---------- 4. 대형 곡면 돔(Curved Ultra-Wide Dome) 메쉬 구축 ----------
+  // ---------- 4. 대형 곡면 돔(Curved Panoramic Dome) 메쉬 구축 (정면 중앙 정렬) ----------
   const domeGroup = new THREE.Group();
   scene.add(domeGroup);
 
   let domeParams = {
-    radius: 30.0,
-    fovX: 180.0,
+    radius: 25.0,
+    fovX: 190.0,
     height: 1.6,
     leftEyeScaleMult: 0.85,
     rightEyeScaleMult: 1.15,
   };
 
-  // 대기 화면 캔버스 텍스처 (100% 렌더링 확인용 안내판)
   const waitCanvas = document.createElement('canvas');
   waitCanvas.width = 1920; waitCanvas.height = 1080;
   const wCtx = waitCanvas.getContext('2d');
@@ -186,16 +177,15 @@
     for(let x=0; x<=1920; x+=80){ wCtx.beginPath(); wCtx.moveTo(x,0); wCtx.lineTo(x,1080); wCtx.stroke(); }
     for(let y=0; y<=1080; y+=80){ wCtx.beginPath(); wCtx.moveTo(0,y); wCtx.lineTo(1920,y); wCtx.stroke(); }
     wCtx.fillStyle = '#ffffff'; wCtx.font = 'bold 42px sans-serif'; wCtx.textAlign = 'center';
-    wCtx.fillText('🎬 Harold Halibut — Panoramic Dome Screen', 960, 480);
+    wCtx.fillText('🎬 Harold Halibut — Panoramic Dome Theater', 960, 480);
     wCtx.fillStyle = '#4da6ff'; wCtx.font = '30px sans-serif';
     wCtx.fillText(msg, 960, 560);
     wCtx.fillStyle = '#aaaaaa'; wCtx.font = '22px sans-serif';
-    wCtx.fillText('MP4 / WebM / MKV / AVI / MOV 등 모든 비디오 지원 (무제한 용량)', 960, 620);
+    wCtx.fillText('시야 정면을 감싸는 몰입형 곡면 돔 준비 완료', 960, 620);
   }
   drawWaitingScreen();
   const defaultTex = new THREE.CanvasTexture(waitCanvas);
 
-  // 100% 가시성이 보장되는 양면(DoubleSide) 표준 재질
   const domeMat = new THREE.MeshBasicMaterial({
     map: defaultTex,
     side: THREE.DoubleSide
@@ -206,19 +196,15 @@
     if (domeMesh) { domeGroup.remove(domeMesh); domeMesh.geometry.dispose(); }
     const r = domeParams.radius;
     const fovRad = THREE.MathUtils.degToRad(domeParams.fovX);
-    // 사용자 정면(-Z 축)을 중심으로 원통 곡면 배치
-    const startAngle = -Math.PI * 0.5 - fovRad * 0.5;
-    const heightSpan = (r * fovRad) * (9 / 16); // 16:9 화면비 유지
+    
+    // 시선 정면(-Z축)을 완벽히 감싸도록 시작 각도 조정 (중심 기준 좌우 대칭)
+    const startAngle = Math.PI * 0.5 - fovRad * 0.5;
+    const heightSpan = (r * fovRad) * (9 / 16); // 16:9 화면비
 
-    // CylinderGeometry(radiusTop, radiusBottom, height, radialSegments, heightSegments, openEnded, thetaStart, thetaLength)
     const geo = new THREE.CylinderGeometry(r, r, heightSpan, 64, 16, true, startAngle, fovRad);
     
-    // UV 텍스처 좌표가 정면에서 올바르게 보이도록 매핑 보정
-    const uv = geo.attributes.uv;
-    for (let i = 0; i < uv.count; i++) {
-      uv.setX(i, 1.0 - uv.getX(i)); // 좌우 반전 교정
-    }
-    uv.needsUpdate = true;
+    // 안쪽에서 정면으로 올바르게 보이도록 X축 플립
+    geo.scale(-1, 1, 1);
 
     domeMesh = new THREE.Mesh(geo, domeMat);
     domeMesh.position.set(0, domeParams.height, 0);
@@ -240,12 +226,10 @@
     if (audioCtx.state === 'suspended') audioCtx.resume();
     videoStatus.textContent = `⏳ 파일 스트림 분석 중: ${file.name}...`;
 
-    // RAM 점유 없이 직접 스트리밍하는 Blob URL 생성
     const streamUrl = URL.createObjectURL(file);
     domeVideoEl.src = streamUrl;
     domeVideoEl.load();
 
-    // 새 비디오 텍스처 초기화
     if (domeVideoTex) domeVideoTex.dispose();
     domeVideoTex = new THREE.VideoTexture(domeVideoEl);
     domeVideoTex.colorSpace = THREE.SRGBColorSpace;
@@ -256,17 +240,15 @@
     domeMat.map = domeVideoTex;
     domeMat.needsUpdate = true;
 
-    // Web Audio 라우팅
     if (!videoSourceNode) {
       try {
         videoSourceNode = audioCtx.createMediaElementSource(domeVideoEl);
         videoSourceNode.connect(domeVideoGain);
       } catch(err) {
-        console.warn('MediaElementSource 재연결 생략:', err);
+        console.warn(err);
       }
     }
 
-    // 메타데이터 로드 완료 후 재생 시작
     domeVideoEl.onloadeddata = () => {
       domeVideoEl.play().then(() => {
         videoStatus.textContent = `▶ 재생 중: ${file.name} (${(file.size / (1024*1024)).toFixed(1)} MB)`;
@@ -276,7 +258,7 @@
     };
 
     domeVideoEl.onerror = () => {
-      videoStatus.textContent = `❌ 재생 오류: 브라우저가 지원하지 않는 코덱입니다.`;
+      videoStatus.textContent = `❌ 재생 오류: 브라우저 지원 코덱 확인 필요`;
     };
   });
 
@@ -287,7 +269,7 @@
       domeVideoEl.play().then(() => {
         videoStatus.textContent = `▶ 재생 중`;
       }).catch(e => {
-        videoStatus.textContent = `재생 실패: 화면을 터치해 주세요.`;
+        videoStatus.textContent = `재생 실패: 화면 터치 필요`;
       });
     } else {
       domeVideoEl.pause();
@@ -344,7 +326,7 @@
   domeFovXEl.addEventListener('input', e => { domeParams.fovX = Number(e.target.value); buildDomeMesh(); });
   domeHeightEl.addEventListener('input', e => { domeParams.height = Number(e.target.value); if(domeMesh) domeMesh.position.y = domeParams.height; });
 
-  // ---------- 7. 스마트폰 수경 VR 모드 (Cardboard SBS) ----------
+  // ---------- 7. 스마트폰 수경 VR 모드 ----------
   const uiPanel = $('#ui');
   const vrDivider = $('#vrDivider');
   const exitVrBtn = $('#exitVrBtn');
@@ -417,7 +399,6 @@
   let recordedChunks = [];
   let isRecording = false;
   let recordingMode = null;
-  let recordStartTime = 0;
 
   function getBestSupportedMimeType(){
     const candidates = ['video/mp4;codecs=avc1', 'video/mp4', 'video/webm;codecs=h264', 'video/webm'];
@@ -473,7 +454,6 @@
 
       mediaRecorder.start(1000);
       isRecording = true;
-      recordStartTime = performance.now();
 
       if (mode === 'sbs') {
         recSbsBtn.classList.add('recording');
@@ -591,7 +571,6 @@
       domeGroup.scale.set(1, 1, 1);
       renderer.render(scene, camera);
     } else if (isMobileVr) {
-      // 모바일 수경 VR 직접 분할 렌더
       const w = window.innerWidth;
       const h = window.innerHeight;
       const halfW = Math.floor(w * 0.5);
@@ -624,7 +603,6 @@
 
       renderer.setScissorTest(false);
     } else {
-      // 일반 PC 2D 브라우저 화면
       renderer.autoClear = true;
       domeGroup.scale.set(1, 1, 1);
       renderer.render(scene, camera);
